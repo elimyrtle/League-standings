@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grand Strand Middle School League Standings</title>
+  <style>
+    :root {
+      --navy: #1F3C88;
+      --teal: #0F766E;
+      --yellow: #F4C430;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #6b7280;
+      --line: #dbe4ee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        linear-gradient(180deg, var(--navy) 0, var(--navy) 210px, var(--bg) 210px, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 50px;
+    }
+
+    .hero {
+      color: white;
+      padding: 10px 6px 28px;
+    }
+
+    .league-tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 7px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(18, 38, 63, 0.12);
+      overflow: hidden;
+      border: 1px solid rgba(31, 60, 136, 0.08);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(15,118,110,0.08), rgba(244,196,48,0.08));
+    }
+
+    .card-top h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+
+    .updated {
+      font-size: 0.88rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: #f9fbfd;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 1rem;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: #fbfdff;
+    }
+
+    .rank,
+    .num,
+    .gb {
+      text-align: center;
+      width: 90px;
+    }
+
+    .team {
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .team-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex: 0 0 12px;
+    }
+
+    .leader {
+      background: rgba(244, 196, 48, 0.12);
+    }
+
+    .leader .rank strong {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--yellow);
+      color: #3f3200;
+      font-size: 0.92rem;
+    }
+
+    .rank strong {
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .foot {
+      padding: 14px 18px 18px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      border-top: 1px solid var(--line);
+      background: #fcfdff;
+    }
+
+    .legend {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .legend-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(18, 38, 63, 0.05);
+    }
+
+    .legend-box .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .legend-box .value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .card-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      thead th,
+      tbody td {
+        padding: 12px 10px;
+        font-size: 0.92rem;
+      }
+
+      .rank,
+      .num,
+      .gb {
+        width: auto;
+      }
+
+      .legend {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .wrap {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .hero {
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+
+      .league-tag {
+        font-size: 0.68rem;
+      }
+
+      thead th {
+        font-size: 0.72rem;
+      }
+
+      tbody td {
+        font-size: 0.88rem;
+      }
+
+      .legend {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="league-tag">Spring 2026</div>
+      <h1>Grand Strand Middle School League Standings</h1>
+      <p>Middle School Soccer</p>
+    </section>
+
+    <section class="card">
+      <div class="card-top">
+        <h2>League Table</h2>
+        <div class="updated" id="updatedText">Updated: March 15, 2026</div>
+      </div>
+
+      <table aria-label="League standings">
+        <thead>
+          <tr>
+            <th class="rank">Rank</th>
+            <th class="team">Team</th>
+            <th class="num">W</th>
+            <th class="num">L</th>
+            <th class="num">T</th>
+            <th class="gb">GB</th>
+          </tr>
+        </thead>
+        <tbody id="standingsBody"></tbody>
+      </table>
+
+      <div class="foot">
+        GB = Games Behind first place. Formula: ((leader wins - team wins) + (team losses - leader losses)) / 2
+      </div>
+    </section>
+
+    <section class="legend">
+      <div class="legend-box">
+        <div class="label">Leader</div>
+        <div class="value" id="leaderName">—</div>
+      </div>
+      <div class="legend-box">
+        <div class="label">Best Record</div>
+        <div class="value" id="bestRecord">—</div>
+      </div>
+      <div class="legend-box">
+        <div class="label">Teams</div>
+        <div class="value">5</div>
+      </div>
+      <div class="legend-box">
+        <div class="label">Season</div>
+        <div class="value">Spring 2026</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const teams = [
+      { name: "CJA", wins: 4, losses: 1, ties: 1 },
+      { name: "Christian Academy", wins: 3, losses: 2, ties: 1 },
+      { name: "Conway Christian", wins: 3, losses: 3, ties: 0 },
+      { name: "Palmetto Academy", wins: 2, losses: 3, ties: 1 },
+      { name: "Calvary", wins: 1, losses: 4, ties: 1 }
+    ];
+
+    const updatedDate = "March 15, 2026";
+
+    function winPct(team) {
+      const games = team.wins + team.losses + team.ties;
+      if (games === 0) return 0;
+      return (team.wins + 0.5 * team.ties) / games;
+    }
+
+    teams.sort((a, b) => {
+      const pctDiff = winPct(b) - winPct(a);
+      if (pctDiff !== 0) return pctDiff;
+      if (b.wins !== a.wins) return b.wins - a.wins;
+      if (a.losses !== b.losses) return a.losses - b.losses;
+      return b.ties - a.ties;
+    });
+
+    const leader = teams[0];
+    const tbody = document.getElementById("standingsBody");
+    const leaderName = document.getElementById("leaderName");
+    const bestRecord = document.getElementById("bestRecord");
+    const updatedText = document.getElementById("updatedText");
+
+    updatedText.textContent = "Updated: " + updatedDate;
+    leaderName.textContent = leader.name;
+    bestRecord.textContent = `${leader.wins}-${leader.losses}-${leader.ties}`;
+
+    teams.forEach((team, index) => {
+      let gb = "—";
+      if (index !== 0) {
+        gb = (((leader.wins - team.wins) + (team.losses - leader.losses)) / 2).toFixed(1);
+      }
+
+      const row = document.createElement("tr");
+      if (index === 0) row.className = "leader";
+
+      row.innerHTML = `
+        <td class="rank"><strong>${index + 1}</strong></td>
+        <td class="team">
+          <div class="team-name">
+            <span class="badge"></span>
+            <span>${team.name}</span>
+          </div>
+        </td>
+        <td class="num">${team.wins}</td>
+        <td class="num">${team.losses}</td>
+        <td class="num">${team.ties}</td>
+        <td class="gb">${gb}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  </script>
+</body>
+</html>
